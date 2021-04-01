@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<title>Home</title>
+
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+*{
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+.body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background-attachment: fixed;
+}
+
+.container {
+	position: relative;
+	width: 950px;
+	padding:20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-top: 10px;
+}
+.container .card {
+	position: relative;
+	width: 250px;
+	height: 320px;
+	background: #fff;
+	margin: 20px;
+	border-radius: 20px;
+	overflow:hidden;
+	box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+	transition: 0.5s;
+}
+
+.container:hover .card {
+	filter:blur(0px);
+	transform: scale(0.9);
+	opacity: 0.5;
+}
+.container .card:hover {
+	filter:blur(0px);
+	transform: scale(1.1);
+	opacity: 1;
+}
+
+
+
+.container .card .circle {
+
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background:#fff;
+	/*clip-path: circle(180px at center 0);*/
+	text-align: center;
+}
+
+.container .card .circle h2 {
+	color: #000;
+	font-size: 4.5em;
+	padding:10px 0;
+}
+.container .card .content {
+	
+	bottom: 10px;
+	padding: 40px;
+	text-align: center;
+}
+
+.conntainer .card .content p {
+	color: #666;
+}
+
+.container .card .content a{
+	position: relative;
+	display: inline-block;
+	padding: 8px 15px;
+	background: #000;
+	color: #fff;
+	border-radius: 15px;
+	text-decoration: none;
+	margin-top: 20px;
+	font-size: 10px;
+}
+
+.container .card .content a:hover{
+	color: #000;
+	background: #fff;
+}
+
+</style>
+
+
+
+
+
+<div class="body">
+	<div class="container">
+{% if request.user.is_superuser %}
+		
+		{% for i in places %}
+			<div class="card">
+				<div class="circle">
+					{% if forloop.counter <= 9 %}
+						<h2>0{{forloop.counter}}</h2>
+					{% else %}
+						<h2>{{forloop.counter}}</h2>
+					{% endif %}
+
+				</div>
+				<div class="content">
+					<p><b>{{i}}</b></p>
+					<a href="{% url 'details' forloop.counter %}">Details</a>
+					<a href="{% url 'addcompany' forloop.counter %}">Add Company</a>
+					<a href="{% url 'chart_view' forloop.counter %}">Chart</a>	
+				</div>	
+			</div>
+		{% endfor %}
+
+{% else %}
+		
+		{% for j in datas %}
+			<div class="card">
+				<div class="circle">
+					{% if forloop.counter <= 9 %}
+						<h2>0{{forloop.counter}}</h2>
+					{% else %}
+						<h2>{{forloop.counter}}</h2>
+					{% endif %}
+
+				</div>
+				<div class="content">
+					<p><b>{{j}}</b></p>
+					<a href="{% url 'details' forloop.counter %}">Details</a>
+					<a href="{% url 'addcompany' forloop.counter %}">Add Company</a>
+					<a href="{% url 'chart_view' forloop.counter %}">Chart</a>	
+				</div>	
+			</div>
+			{% endfor %}
+		
+	</div>
+</div>
+
+{% endif %}
+{% endblock content %}
+
+
+
+
